@@ -5,6 +5,8 @@
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script type="module">
             const { createApp } = Vue
+            let id = 0
+
             createApp({
                 data() {
                     return {
@@ -15,6 +17,12 @@
                         titleClass: 'title',
                         text: '',
                         awesome: true,
+                        newTodo: '',
+                        todos: [
+                            { id: id++, text: 'Learn HTML' },
+                            { id: id++, text: 'Learn JavaScript' },
+                            { id: id++, text: 'Learn Vue' },
+                        ],
                     }
                 },
                 methods: {
@@ -26,7 +34,14 @@
                     },
                     toggle() {
                         this.awesome = !this.awesome
-                    }
+                    },
+                    addTodo() {
+                        this.todos.push({ id: id++, text: this.newTodo })
+                        this.newTodo = ''
+                    },
+                    removeTodo(todo) {
+                        this.todos = this.todos.filter((t) => t !== todo)
+                    },
                 }
             }).mount('#app')
         </script>
@@ -40,6 +55,15 @@
             <h1 v-if="awesome">Vue is awesome!</h1>  <!-- v-if -->
             <h1 v-else>Oh no 😢</h1>
             <button @click="toggle">toggle</button>
+            <h1>ToDo list</h1>
+            <input v-model="newTodo" placeholder="Type ToDo">
+            <button @click="addTodo">Add ToDo</button>
+            <ul>
+                <li v-for="todo in todos" :key="todo.id">  <!-- v-for -->
+                    {{ todo.text }}
+                    <button @click="removeTodo(todo)">X</button>
+                </li>
+            </ul>
         </div>
     </body>
 </html>
