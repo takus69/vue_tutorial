@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script type="module">
+            const { createApp } = Vue
+            createApp({
+                data() {
+                    return {
+                        message: 'Hello World!',
+                        counter: {
+                            count: 0,
+                        },
+                        titleClass: 'title',
+                    }
+                },
+                methods: {
+                    increment() {
+                        this.counter.count++
+                    }
+                }
+            }).mount('#app')
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <h1 :class="titleClass">{{ message }}</h1>  <!-- v-bind -->
+            <button @:click="increment">Count is: {{ counter.count }}</button>  <!-- v-on -->
+        </div>
+    </body>
+</html>
