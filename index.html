@@ -14,6 +14,7 @@
                         },
                         titleClass: 'title',
                         text: '',
+                        awesome: true,
                     }
                 },
                 methods: {
@@ -23,6 +24,9 @@
                     onInput(e) {
                         this.text = e.target.value
                     },
+                    toggle() {
+                        this.awesome = !this.awesome
+                    }
                 }
             }).mount('#app')
         </script>
@@ -33,6 +37,9 @@
             <button @click="increment">Count is: {{ counter.count }}</button>  <!-- v-on -->
             <input v-model="text" placeholder="Type here">  <!-- v-model -->
             <p>{{ text }}</p>
+            <h1 v-if="awesome">Vue is awesome!</h1>  <!-- v-if -->
+            <h1 v-else>Oh no 😢</h1>
+            <button @click="toggle">toggle</button>
         </div>
     </body>
 </html>
