@@ -13,12 +13,16 @@
                             count: 0,
                         },
                         titleClass: 'title',
+                        text: '',
                     }
                 },
                 methods: {
                     increment() {
                         this.counter.count++
-                    }
+                    },
+                    onInput(e) {
+                        this.text = e.target.value
+                    },
                 }
             }).mount('#app')
         </script>
@@ -26,7 +30,9 @@
     <body>
         <div id="app">
             <h1 :class="titleClass">{{ message }}</h1>  <!-- v-bind -->
-            <button @:click="increment">Count is: {{ counter.count }}</button>  <!-- v-on -->
+            <button @click="increment">Count is: {{ counter.count }}</button>  <!-- v-on -->
+            <input v-model="text" placeholder="Type here">  <!-- v-model -->
+            <p>{{ text }}</p>
         </div>
     </body>
 </html>
