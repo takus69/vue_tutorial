@@ -24,6 +24,14 @@
                             { id: id++, text: 'Learn Vue', done: false },
                         ],
                         hideCompleted: false,
+                        todoDta: null,
+                        todoId: 1,
+                    }
+                },
+                watch: {  // watcher
+                    todoId(newId) {
+                        console.log(`new ToDo ID is: ${newId}`)
+                        this.fetchData()
                     }
                 },
                 methods: {
@@ -43,6 +51,14 @@
                     removeTodo(todo) {
                         this.todos = this.todos.filter((t) => t !== todo)
                     },
+                    async fetchData() {  // 非同期処理
+                        this.todoData = null
+                        const res = await fetch(
+                            `https://jsonplaceholder.typicode.com/todos/${this.todoId}`
+                        )
+                        this.todoData = await res.json()
+                        this.todos.push({ id: id++, text: this.todoData.title, done: this.todoData.completed })
+                    },
                 },
                 computed: {
                     filteredTodos() {
@@ -51,6 +67,10 @@
                         : this.todos
                     }
                 },
+                mounted() {  // ライフサイクルmounted
+                    this.$refs.p.textContent = 'mounted'
+                    this.fetchData()
+                }
             }).mount('#app')
         </script>
     </head>
@@ -73,9 +93,14 @@
                     <button @click="removeTodo(todo)">X</button>
                 </li>
             </ul>
+            <p>Fetch ToDo ID: {{ todoId }}</p>
+            <button @click="todoId++">Fetch next todo</button>
+            <p v-if="!todoData">Loading...</p>
+            <p v-else>Fetch Completed!</p>
             <button @click="hideCompleted = !hideCompleted">
                 {{ hideCompleted ? 'Show all' : 'Hide completed' }}
             </button>
+            <p ref="p">hello</p>
         </div>
     </body>
 </html>
