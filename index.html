@@ -4,6 +4,7 @@
         <link href="style.css" rel="stylesheet">
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script type="module">
+            // import { ChildComp } from './ChildComp.js'
             const { createApp } = Vue
             let id = 0
 
@@ -70,7 +71,10 @@
                 mounted() {  // ライフサイクルmounted
                     this.$refs.p.textContent = 'mounted'
                     this.fetchData()
-                }
+                },
+                //components: {
+                    //ChildComp
+                //},
             }).mount('#app')
         </script>
     </head>
@@ -101,6 +105,7 @@
                 {{ hideCompleted ? 'Show all' : 'Hide completed' }}
             </button>
             <p ref="p">hello</p>
+            <!-- <child-comp></child-comp> -->
         </div>
     </body>
 </html>
